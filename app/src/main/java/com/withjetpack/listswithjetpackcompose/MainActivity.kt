@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
@@ -27,29 +29,64 @@ class MainActivity : ComponentActivity() {
         setContent {
             ListsWithJetpackComposeTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-
-                    //Coloum scrolling
-
-                    val scrollstate = rememberScrollState()
-                    Column(modifier = Modifier.verticalScroll(scrollstate)) {
-                        for (i in 1..30) {
-                            Text(
-                                text = "List Data Index $i",
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Bold,
-                                textAlign = TextAlign.Start,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(10.dp)
-                            )
-                        }
-                    }
-                }
+               // ColumnList()
+               // LazyColumnList()
+                LazyColumnStringList()
             }
         }
     }
+
+    @Composable
+    private fun LazyColumnStringList() {
+        LazyColumn(){
+            itemsIndexed(listOf("mango","apple","banana","guava","lemon")){
+                index, item ->
+                Text(
+                    text = "$item",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp)
+                )
+            }
+        }
+    }
+
+    @Composable
+    private fun LazyColumnList() {
+
+        LazyColumn{
+
+            items(5){
+                Text(
+                    text = "Lazy List Index $it",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp)
+                )
+            }
+        }
+    }
+
+    @Composable
+    private fun ColumnList() {
+        val scrollstate = rememberScrollState()
+        Column(modifier = Modifier.verticalScroll(scrollstate)) {
+            for (i in 1..5) {
+                Text(
+                    text = "Column List Index $i",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp)
+                )
+            }
+        }    }
 }
